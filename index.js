@@ -44,7 +44,7 @@ app.post('/webhook', async(req, res) => {
   try {
     const event = (req.get('X-Gitea-Event') || req.get('X-GitHub-Event') || '').toLowerCase();
     const payload = req.body || {};
-    console.log('event');
+    console.log(event);
     if (event === 'issues' || event === 'issue' || event === 'issue_comment' || event === 'issue_comment.created' || event === 'comment') {
       const issue = payload.issue || payload;
       const repo = payload.repository || payload.repo || {};
