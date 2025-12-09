@@ -25,7 +25,7 @@ const Load = _ => {
 }
 const Save = _ => fs.writeFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf-8');
 
-const reminders = [`Shouldn't you be making menus right now?`, `A menu a day keeps the set loss away`, `Where's my menus?`, `Aren't you going to make menus?`, `Menus????`, `Hello? Menus?`];
+const reminders = [`Shouldn't you be making menus right now?`, `A menu a day keeps the set loss away`, `Where's my menus?`, `Aren't you going to make menus?`, `Menus????`, `Hello? Menus?`, ` should be making menus right now...`];
 const LoafReminder = _ => {
   setTimeout(() => {
     const web = client.channels.cache.get('1442234725996695632');
@@ -43,7 +43,10 @@ const setRole = async(user, reaction, rid, add) => {
   await member.roles[add ? 'add' : 'remove'](role, 'Reaction role '+(add ? 'added' : 'removed'));
 }
 const commandPrefix = '!g ';
+const greetings = ['Hi', 'Hello', 'Hey', 'Hey there', 'Hi', 'Heya', 'Sup', 'Hoi', 'Hia'], emoticons = ['^V^', ':)', ':]', ':D', '=)', '=]', '=D'];
 client.on('messageCreate', async message => {
+  const lower = message.content.toLowerCase();
+  if (message.content.includes('<@1447959380787200021>') && (lower.includes('hi') || lower.includes('hey')) message.reply(greetings[Math.floor(Math.random()*greetings.length)]+' '+emoticons[Math.floor(Math.random()*emoticons.length)]);
   if (message.author.bot || !message.content.startsWith(commandPrefix)) return;
   const [_, command, ...args] = message.content.split(' ');
   if (command == 'rr') { // !g rr <messageid> <emoji> <role> <emoji> <role> etc.
