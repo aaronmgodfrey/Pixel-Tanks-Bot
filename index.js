@@ -44,10 +44,12 @@ app.post('/webhook', async(req, res) => {
   try {
     const event = (req.get('X-Gitea-Event') || req.get('X-GitHub-Event') || '').toLowerCase();
     const payload = req.body || {};
-
+    console.log('event');
     if (event === 'issues' || event === 'issue' || event === 'issue_comment' || event === 'issue_comment.created' || event === 'comment') {
       const issue = payload.issue || payload;
       const repo = payload.repository || payload.repo || {};
+      console.log(issue);
+      console.log(repo);
       if (!issue || !repo) return res.status(200).send('ignored');
 
       const repoFull = repo.full_name || `${repo.owner?.login || repo.owner?.name}/${repo.name}`;
