@@ -164,7 +164,7 @@ setInterval(LoafReminder, 1000*60*60*24);
 
 let lastOnline = 0;
 const getOnline = async _ => {
-  const guild = await client.guilds.fetch(GUILD_ID);
+  const guild = await client.guilds.fetch(1374222912017535017);
   await guild.members.fetch();
   const online = guild.members.cache.filter(m => {
     const hasRole = m.roles.cache.has(1448089464818765846);
