@@ -186,7 +186,10 @@ const checkAndNotify = async _ => {
     console.error('checkAndNotify error:', err);
   }
 }
-setInterval(checkAndNotify, 1000*60*5);
+(async _ => {
+  await checkAndNotify();
+  setInterval(checkAndNotify, 1000*60*5);
+})();
 
 const setRole = async(user, reaction, rid, add) => {
   rid = rid.replaceAll('<', '').replaceAll('>', '').replaceAll('@', '').replaceAll('&', '');
