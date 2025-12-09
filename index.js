@@ -11,7 +11,6 @@ const e = _ => _;
 
 const forumChannel = '1407752313522880512';
 const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
-  console.log('Ensure thread');
   if (Data.Issues[issueNumber]) {
     try {
       const storedChannel = await client.channels.fetch(Data.Issues[issueNumber].channel).catch(e);
@@ -21,11 +20,8 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
       }
     } catch (e) {}
   }
-  console.log('asdf');
   const channel = await client.channels.fetch(forumChannel).catch(e);
-  console.log(channel);
-  console.log(channel.isTextBased());
-  if (!channel || !channel.isTextBased()) return;
+  //if (!channel || !channel.isTextBased()) return;
 
   const messageContent = `**Issue #${issueNumber}: ${issueTitle}**\n${issueUrl}\n\n${issueBody || '(no description)'}`;
   const threadName = `Issue #${issueNumber}: ${issueTitle}`.slice(0, 100); // keep it reasonable
