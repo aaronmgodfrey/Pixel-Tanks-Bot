@@ -118,6 +118,7 @@ const issueNumberForThread = async(id) => {
   return;
 }
 const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
+  console.log(issueNumber);
   try {
     const url = `https://codeberg.org/api/v1/repos/cs641311/PixelTanks/issues/${issueNumber}/comments`;
     const res = await fetch(url, {
