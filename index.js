@@ -118,7 +118,6 @@ const issueNumberForThread = async(id) => {
   return;
 }
 const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
-  console.log('sending coment');
   try {
     const url = `https://codeberg.org/api/v1/repos/cs641311/PixelTanks/issues/${issueNumber}/comments`;
     const res = await fetch(url, {
@@ -172,6 +171,9 @@ client.on('messageCreate', async message => {
   if (lower.includes('oops')) message.reply('hotdog'); // TEMP
   if (lower.includes('ben')) message.reply('10'); // TEMP
 
+  console.log(message.channel.id);
+  console.log(forumChannel);
+  console.log(message.channel.isThread());
   if (message.channel.id == forumChannel && message.channel.isThread()) {
     const issueNumber = issueNumberForThread(message.channel.id);
     if (!issueNumber) return;
