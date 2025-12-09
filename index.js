@@ -1,6 +1,5 @@
 const fs = require('fs');
-const token = fs.readFileSync('token.txt');
-console.log(token);
+const token = fs.readFileSync('token.txt', 'utf8');
 
 
 const {Client, GatewayIntentBits, Partials} = require("discord.js");
@@ -20,12 +19,12 @@ const Load = _ => {
   console.log('Loading Bot Data...');
   Data.ReactionRoles = {};
   try {
-    if (fs.existsSync('reaction_roles.json')) Data.ReactionRoles = JSON.parse(fs.readFileSync('reaction_roles.json')); else console.log(`'reaction_roles.json' does not exist!`);
+    if (fs.existsSync('reaction_roles.json')) Data.ReactionRoles = JSON.parse(fs.readFileSync('reaction_roles.json', 'utf8')); else console.log(`'reaction_roles.json' does not exist!`);
   } catch(e) {
     console.log('Warning! Failed to load reaction roles!');
   }
 }
-const Save = _ => fs.WriteFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles));
+const Save = _ => fs.WriteFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf8');
 
 const commandPrefix = '!g ';
 const setRole = async(user, reaction, rid, add) => {
