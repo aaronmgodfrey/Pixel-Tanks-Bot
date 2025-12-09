@@ -58,6 +58,19 @@ app.post('/webhook', async(req, res) => {
       if (event === 'issues' || event === 'issue') {
         const action = payload.action || 'unknown';
         await thread.send({content: `Issue ${action}: **${issueTitle}**\n${issueUrl}`}).catch(e => console.warn('send err', e));
+        if (action === 'closed') try {
+          const info = Data.Issues[issueNumber];
+          if (info && info.thread) {
+            const t = await client.channels.fetch(info.thread).catch(()=>null);
+            if (t && t.isThread && t.isThread()) await t.delete('Issue closed on Codeberg').catch(err => console.warn('Failed to delete thread:', err));
+          }
+          if (Data.Issues[issueNumber]) {
+            delete Data.Issues[issueNumber];
+            Save();
+          }
+        } catch (err) {
+          console.error('Error while deleting thread for closed issue:', err);
+        }
         return res.status(200).send('ok');
       } else {
         const comment = payload.comment || {};
