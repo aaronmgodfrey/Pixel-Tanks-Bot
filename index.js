@@ -186,10 +186,6 @@ const checkAndNotify = async _ => {
     console.error('checkAndNotify error:', err);
   }
 }
-(async _ => {
-  await checkAndNotify();
-  setInterval(checkAndNotify, 1000*60*5);
-})();
 
 const setRole = async(user, reaction, rid, add) => {
   rid = rid.replaceAll('<', '').replaceAll('>', '').replaceAll('@', '').replaceAll('&', '');
@@ -261,6 +257,11 @@ client.on('messageReactionRemove', async(reaction, user) => {
     if (message != reaction.message.id) continue;
     for (const emoji in Data.ReactionRoles[message]) if (reaction.emoji.toString() === emoji) setRole(user, reaction, Data.ReactionRoles[message][emoji], false);
   }
+});
+
+client.once('ready', async _ => {
+  await checkAndNotify();
+  setInterval(checkAndNotify, 1000*60*5);
 });
 
 client.login(token);
