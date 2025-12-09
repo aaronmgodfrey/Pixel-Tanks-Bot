@@ -118,7 +118,6 @@ const issueNumberForThread = async(id) => {
   return;
 }
 const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
-  console.log(issueNumber);
   try {
     const url = `https://codeberg.org/api/v1/repos/cs641311/PixelTanks/issues/${issueNumber}/comments`;
     const res = await fetch(url, {
@@ -174,7 +173,7 @@ client.on('messageCreate', async message => {
 
 
   if (message.channel.isThread()) {
-    const issueNumber = issueNumberForThread(message.channel.id);
+    const issueNumber = await issueNumberForThread(message.channel.id);
     if (!issueNumber) return;
 
     let md = `**From Discord — ${message.author.tag}**\n\n${message.content || ''}`;
