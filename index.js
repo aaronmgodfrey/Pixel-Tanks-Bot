@@ -25,7 +25,6 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
 
   const messageContent = `**Issue #${issueNumber}: ${issueTitle}**\n${issueUrl}\n\n${issueBody || '(no description)'}`;
   const threadName = `Issue #${issueNumber}: ${issueTitle}`.slice(0, 100); // keep it reasonable
-  console.log('making thread');
   const thread = await channel.threads.create({
     name: threadName,
     autoArchiveDuration: 10080,
@@ -39,7 +38,6 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
 }
 
 app.post('/webhook', async(req, res) => {
-  console.log('REQUEST RECEIVED');
   try {
     const event = (req.get('X-Gitea-Event') || req.get('X-GitHub-Event') || '').toLowerCase();
     const payload = req.body || {};
