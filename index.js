@@ -5,10 +5,11 @@ const {Client, GatewayIntentBits, Partials} = require("discord.js");
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildPresences,
   ],
   partials: [Partials.Message, Partials.Reaction, Partials.Channel]
 });
@@ -52,6 +53,7 @@ client.on('messageCreate', async message => {
     if (lower.includes('r3')) message.reply('<@783362675761348629>');
   }
   if (lower.includes('oops')) message.reply('hotdog');
+  if (lower.includes('ben')) message.reply('10');
   if (message.author.bot || !message.content.startsWith(commandPrefix)) return;
   const [_, command, ...args] = message.content.split(' ');
   if (command == 'rr') { // !g rr <messageid> <emoji> <role> <emoji> <role> etc.
