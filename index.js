@@ -45,7 +45,7 @@ const setRole = async(user, reaction, rid, add) => {
 const commandPrefix = '!g ';
 const greetings = ['Hi', 'Hello', 'Hey', 'Hey there', 'Hi', 'Heya', 'Sup', 'Hoi', 'Hia'], emoticons = ['^V^', ':)', ':]', ':D', '=)', '=]', '=D'];
 client.on('messageCreate', async message => {
-  const lower = message.content.toLowerCase();
+  let lower = message.content.toLowerCase();
   if (lower.includes('greg') || message.content.includes('<@1447959380787200021>')) {
     if (greetings.some(g => lower.includes(g.toLowerCase()))) message.reply(greetings[Math.floor(Math.random()*greetings.length)]+' '+emoticons[Math.floor(Math.random()*emoticons.length)]);
     if (lower.includes('[owner] r3gress1on')) lower = lower.replace('] r3', 'ezlb');
