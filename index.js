@@ -171,7 +171,7 @@ const getOnline = async _ => {
     const presence = m.presence;
     const isOnline = presence && presence.status && presence.status !== 'offline';
     return hasRole && isOnline;
-  });
+  }).toArray();
   return online;
 }
 const checkAndNotify = async _ => {
