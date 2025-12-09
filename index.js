@@ -66,6 +66,7 @@ app.post('/webhook', async(req, res) => {
         const author = comment.user?.login || comment.user?.name || 'unknown';
         const commentBody = comment.body || comment.content || '';
         const commentUrl = comment.html_url || comment.url || '';
+        if (commentBody.includes('**From Discord — ')) return;
         const text = `**Comment by ${author}:**\n${commentBody}`;
         await thread.send({content: text}).catch(e => console.warn('send err', e));
         return res.status(200).send('ok');
