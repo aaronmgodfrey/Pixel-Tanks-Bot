@@ -1,6 +1,6 @@
 const fs = require('fs');
 const token = fs.readFileSync('token.txt', 'utf8');
-
+console.log(token);
 
 const {Client, GatewayIntentBits, Partials} = require("discord.js");
 const client = new Client({
@@ -73,4 +73,5 @@ client.on('messageReactionRemove', async(reaction, user) => {
     for (const emoji in Data.ReactionRoles[message]) if (reaction.emoji.toString() === emoji) setRole(user, reaction, Data.ReactionRoles[message][emoji], false);
   }
 });
+console.log('asdfasdf');
 client.login(token);
