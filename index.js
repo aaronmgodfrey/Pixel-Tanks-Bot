@@ -186,7 +186,6 @@ const checkAndNotify = async _ => {
     console.error('checkAndNotify error:', err);
   }
 }
-await checkAndNotify();
 setInterval(checkAndNotify, 1000*60*5);
 
 const setRole = async(user, reaction, rid, add) => {
