@@ -49,7 +49,7 @@ client.on('messageCreate', async message => {
   if (lower.includes('greg') || message.content.includes('<@1447959380787200021>')) {
     if (greetings.some(g => lower.includes(g.toLowerCase()))) message.reply(greetings[Math.floor(Math.random()*greetings.length)]+' '+emoticons[Math.floor(Math.random()*emoticons.length)]);
     if (lower.includes('r3')) message.reply('<@783362675761348629>');
-    if (lower.includes('say')) message.reply(message.content.slice(lower.indexOf('say')+3);
+    if (lower.includes('say')) message.reply(message.content.slice(lower.indexOf('say')+3));
   }
   if (lower.includes('hotdog')) message.reply('oops');
   if (message.author.bot || !message.content.startsWith(commandPrefix)) return;
