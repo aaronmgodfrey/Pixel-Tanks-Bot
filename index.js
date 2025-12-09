@@ -23,7 +23,7 @@ const Load = _ => {
     console.log('Warning! Failed to load reaction roles!');
   }
 }
-const Save = _ => fs.WriteFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf8');
+const Save = _ => fs.writeFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf8');
 
 const commandPrefix = '!g ';
 const setRole = async(user, reaction, rid, add) => {
