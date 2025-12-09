@@ -40,6 +40,7 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
 }
 
 app.post('/webhook', async(req, res) => {
+  console.log('REQUEST RECEIVED');
   try {
     const event = (req.get('X-Gitea-Event') || req.get('X-GitHub-Event') || '').toLowerCase();
     const payload = req.body || {};
