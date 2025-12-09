@@ -171,10 +171,8 @@ client.on('messageCreate', async message => {
   if (lower.includes('oops')) message.reply('hotdog'); // TEMP
   if (lower.includes('ben')) message.reply('10'); // TEMP
 
-  console.log(message.channel.id);
-  console.log(forumChannel);
-  console.log(message.channel.isThread());
-  if (message.channel.id == forumChannel && message.channel.isThread()) {
+
+  if (message.channel.isThread()) {
     const issueNumber = issueNumberForThread(message.channel.id);
     if (!issueNumber) return;
 
