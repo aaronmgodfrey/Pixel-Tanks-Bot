@@ -8,7 +8,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.MessageContent  // only needed if using prefix commands
+    GatewayIntentBits.MessageContent,
   ],
   partials: [Partials.Message, Partials.Reaction, Partials.Channel]
 });
@@ -25,7 +25,15 @@ const Load = _ => {
 }
 const Save = _ => fs.writeFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf-8');
 
-const commandPrefix = '!g ';
+const reminders = [`Shouldn't you be making menus right now?`, `A menu a day keeps the set loss away`, `Where's my menus?`, `Aren't you going to make menus?`, `Menus????`, `Hello? Menus?`];
+const LoafReminder = _ => {
+  setTimeout(() => {
+    const web = client.channels.cache.get('1442234725996695632');
+    web.send('<@1180677005407166546> '+reminders[Math.floor(reminders.length*Math.random())]);
+  }, 1000*60*60*24*Math.random());
+}
+setInterval(LoafReminder, 1000*60*60*24);
+
 const setRole = async(user, reaction, rid, add) => {
   rid = rid.replaceAll('<', '').replaceAll('>', '').replaceAll('@', '').replaceAll('&', '');
   let member = reaction.message.guild.members.cache.get(user.id);
@@ -34,6 +42,7 @@ const setRole = async(user, reaction, rid, add) => {
   if (!role || !member) return;
   await member.roles[add ? 'add' : 'remove'](role, 'Reaction role '+(add ? 'added' : 'removed'));
 }
+const commandPrefix = '!g ';
 client.on('messageCreate', async message => {
   if (message.author.bot || !message.content.startsWith(commandPrefix)) return;
   const [_, command, ...args] = message.content.split(' ');
