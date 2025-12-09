@@ -260,7 +260,7 @@ client.on('messageReactionRemove', async(reaction, user) => {
 });
 
 client.once('ready', async _ => {
-  await checkAndNotify();
+  setTimeout(checkAndNotify, 10000);
   setInterval(checkAndNotify, 1000*60*5);
 });
 
