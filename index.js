@@ -113,7 +113,7 @@ const Load = _ => {
   }
   Data.Issues = {};
   try {
-    if (fs.existsSync('issues.json')) Data.Issues = JSON.parse(fs.readFileSync('issues.json', 'utf-8')); else console.log(`'issues.json does not exist!`);
+    if (fs.existsSync('issues.json')) Data.Issues = JSON.parse(fs.readFileSync('issues.json', 'utf-8')); else console.log(`'issues.json' does not exist!`);
   } catch(e) {
     console.log('Warning! Failed to load issues!');
   }
