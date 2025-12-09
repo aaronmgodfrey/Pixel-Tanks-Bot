@@ -177,6 +177,7 @@ const getOnline = async _ => {
 const checkAndNotify = async _ => {
   try {
     const online = await getOnline(), channel = await client.channels.fetch('1448088599458484357');
+    console.log([...online]);
     const text = `🟢 **Beta Testers online now:** ${online.size} `+[...online].reduce((a, c) => a+c[0].username+' ', '');
     const msg = await channel.messages.fetch('1448088622787203143');
     await msg.edit(text);
