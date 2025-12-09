@@ -11,6 +11,7 @@ const e = _ => _;
 
 const forumChannel = '1407752313522880512';
 const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
+  console.log('Ensure thread');
   if (Data.Issues[issueNumber]) {
     try {
       const storedChannel = await client.channels.fetch(Data.Issues[issueNumber].channel).catch(e);
@@ -26,7 +27,7 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
 
   const messageContent = `**Issue #${issueNumber}: ${issueTitle}**\n${issueUrl}\n\n${issueBody || '(no description)'}`;
   const threadName = `Issue #${issueNumber}: ${issueTitle}`.slice(0, 100); // keep it reasonable
-
+  console.log('making thread');
   const thread = await channel.threads.create({
     name: threadName,
     autoArchiveDuration: 10080,
@@ -44,12 +45,9 @@ app.post('/webhook', async(req, res) => {
   try {
     const event = (req.get('X-Gitea-Event') || req.get('X-GitHub-Event') || '').toLowerCase();
     const payload = req.body || {};
-    console.log(event);
     if (event === 'issues' || event === 'issue' || event === 'issue_comment' || event === 'issue_comment.created' || event === 'comment') {
       const issue = payload.issue || payload;
       const repo = payload.repository || payload.repo || {};
-      console.log(issue);
-      console.log(repo);
       if (!issue || !repo) return res.status(200).send('ignored');
 
       const repoFull = repo.full_name || `${repo.owner?.login || repo.owner?.name}/${repo.name}`;
