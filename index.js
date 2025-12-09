@@ -10,7 +10,7 @@ app.use(express.json());
 const e = _ => _;
 
 const forumChannel = '1407752313522880512';
-async function ensureThreadForIssue(repoFullName, issueNumber, issueTitle, issueUrl, issueBody) {
+const ensureThreadForIssue = (repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
   if (Data.Issues[issueNumber]) {
     try {
       const storedChannel = await client.channels.fetch(Data.Issues[issueNumber].channel).catch(e);
@@ -118,7 +118,7 @@ const issueNumberForThread = async(id) => {
   }
   return;
 }
-const postCommentToCodeberg = async(issueNumber, bodyMarkdown) {
+const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
   try {
     const url = `https://codeberg.org/api/v1/repos/cs641311/PixelTanks/issues/${issueNumber}/comments`;
     const res = await fetch(url, {
