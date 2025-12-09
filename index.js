@@ -51,7 +51,7 @@ client.on('messageCreate', async message => {
     if (greetings.some(g => lower.includes(g.toLowerCase()))) message.reply(greetings[Math.floor(Math.random()*greetings.length)]+' '+emoticons[Math.floor(Math.random()*emoticons.length)]);
     if (lower.includes('r3')) message.reply('<@783362675761348629>');
   }
-  if (lower.includes('hotdog')) message.reply('oops');
+  if (lower.includes('oops')) message.reply('hotdog');
   if (message.author.bot || !message.content.startsWith(commandPrefix)) return;
   const [_, command, ...args] = message.content.split(' ');
   if (command == 'rr') { // !g rr <messageid> <emoji> <role> <emoji> <role> etc.
