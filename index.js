@@ -21,8 +21,9 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
       }
     } catch (e) {}
   }
-
+  console.log('asdf');
   const channel = await client.channels.fetch(forumChannel).catch(e);
+  console.log(channel);
   if (!channel || !channel.isTextBased()) return;
 
   const messageContent = `**Issue #${issueNumber}: ${issueTitle}**\n${issueUrl}\n\n${issueBody || '(no description)'}`;
