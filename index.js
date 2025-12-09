@@ -1,5 +1,6 @@
 const fs = require('fs');
-const token = fs.readFileSync('token.txt').replace(/ /g, '').replace(/\n/g, '');
+const token = fs.readFileSync('token.txt');
+console.log(token);
 
 
 const {Client, GatewayIntentBits, Partials} = require("discord.js");
