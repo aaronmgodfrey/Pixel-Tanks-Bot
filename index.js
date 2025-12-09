@@ -27,6 +27,7 @@ const Save = _ => fs.writeFileSync('reaction_roles.json', JSON.stringify(Data.Re
 
 const commandPrefix = '!g ';
 const setRole = async(user, reaction, rid, add) => {
+  rid = rid.replaceAll('<', '').replaceAll('>', '').replaceAll('@', '').replaceAll('&', '');
   let member = reaction.message.guild.members.cache.get(user.id);
   if (!member) member = await reaction.message.guild.members.fetch(user.id);
   const role = reaction.message.guild.roles.cache.get(rid);
