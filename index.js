@@ -59,14 +59,14 @@ app.post('/webhook', async(req, res) => {
 
       if (event === 'issues' || event === 'issue') {
         const action = payload.action || 'unknown';
-        await thread.send({ content: `Issue ${action}: **${issueTitle}**\n${issueUrl}` }).catch(e => console.warn('send err', e));
+        await thread.send({content: `Issue ${action}: **${issueTitle}**\n${issueUrl}`}).catch(e => console.warn('send err', e));
         return res.status(200).send('ok');
       } else {
         const comment = payload.comment || {};
         const author = comment.user?.login || comment.user?.name || 'unknown';
         const commentBody = comment.body || comment.content || '';
         const commentUrl = comment.html_url || comment.url || '';
-        const text = `**Comment by ${author}:**\n${commentBody}\n\n${commentUrl}`;
+        const text = `**Comment by ${author}:**\n${commentBody}`;
         await thread.send({content: text}).catch(e => console.warn('send err', e));
         return res.status(200).send('ok');
       }
@@ -118,6 +118,7 @@ const issueNumberForThread = async(id) => {
   return;
 }
 const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
+  console.log('sending coment');
   try {
     const url = `https://codeberg.org/api/v1/repos/cs641311/PixelTanks/issues/${issueNumber}/comments`;
     const res = await fetch(url, {
