@@ -18,12 +18,12 @@ const Load = _ => {
   console.log('Loading Bot Data...');
   Data.ReactionRoles = {};
   try {
-    if (fs.existsSync('reaction_roles.json')) Data.ReactionRoles = JSON.parse(fs.readFileSync('reaction_roles.json', 'utf8')); else console.log(`'reaction_roles.json' does not exist!`);
+    if (fs.existsSync('reaction_roles.json')) Data.ReactionRoles = JSON.parse(fs.readFileSync('reaction_roles.json', 'utf-8')); else console.log(`'reaction_roles.json' does not exist!`);
   } catch(e) {
     console.log('Warning! Failed to load reaction roles!');
   }
 }
-const Save = _ => fs.writeFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf8');
+const Save = _ => fs.writeFileSync('reaction_roles.json', JSON.stringify(Data.ReactionRoles), 'utf-8');
 
 const commandPrefix = '!g ';
 const setRole = async(user, reaction, rid, add) => {
