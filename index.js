@@ -164,10 +164,10 @@ setInterval(LoafReminder, 1000*60*60*24);
 
 let lastOnline = 0;
 const getOnline = async _ => {
-  const guild = await client.guilds.fetch(1374222912017535017);
+  const guild = await client.guilds.fetch('1374222912017535017');
   await guild.members.fetch();
   const online = guild.members.cache.filter(m => {
-    const hasRole = m.roles.cache.has(1448089464818765846);
+    const hasRole = m.roles.cache.has('1448089464818765846');
     const presence = m.presence;
     const isOnline = presence && presence.status && presence.status !== 'offline';
     return hasRole && isOnline;
@@ -176,11 +176,11 @@ const getOnline = async _ => {
 }
 const checkAndNotify = async _ => {
   try {
-    const online = await getOnline(), channel = await client.channels.fetch(1448088599458484357);
+    const online = await getOnline(), channel = await client.channels.fetch('1448088599458484357');
     const text = `🟢 **Beta Testers online now:** ${online.length}`+online.reduce((a, c) => a+c+' ', '');
-    const msg = await channel.messages.fetch(1448088622787203143);
+    const msg = await channel.messages.fetch('1448088622787203143');
     await msg.edit(text);
-    if (online.length != lastOnline) client.users.fetch(783362675761348629).then(user => user.send(text)).catch(console.error);
+    if (online.length != lastOnline) client.users.fetch('783362675761348629').then(user => user.send(text)).catch(console.error);
     lastOnline = online.length;
   } catch (err) {
     console.error('checkAndNotify error:', err);
@@ -260,7 +260,7 @@ client.on('messageReactionRemove', async(reaction, user) => {
 });
 
 client.once('ready', async _ => {
-  setTimeout(checkAndNotify, 10000);
+  await checkAndNotify();
   setInterval(checkAndNotify, 1000*60*5);
 });
 
