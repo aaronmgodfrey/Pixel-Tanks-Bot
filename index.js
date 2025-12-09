@@ -259,7 +259,7 @@ client.on('messageReactionRemove', async(reaction, user) => {
   }
 });
 
-client.once('ready', async _ => {
+client.once('clientReady', async _ => {
   await checkAndNotify();
   setInterval(checkAndNotify, 1000*60*5);
 });
