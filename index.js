@@ -38,13 +38,7 @@ client.on('messageCreate', async message => {
   const [_, command, ...args] = message.content.split(' ');
   if (command == 'rr') { // !g rr <messageid> <emoji> <role> <emoji> <role> etc.
     if (args.length%2 != 1) return message.reply('Invalid parameters');
-    let msg;
-    for (const channel of message.guild.channels.cache.values()) {
-      if (!channel.isTextBased()) continue;
-      msg = await channel.messages.fetch(args[0]).catch(_ => _);
-      console.log(msg);
-      if (msg) break;
-    }
+    const msg = await message.channel.messages.fetch(args[0]);
     if (!msg) return message.reply('Message not found');
     Data.ReactionRoles[args[0]] = {};
     for (let i = 1; i < args.length; i += 2) {
