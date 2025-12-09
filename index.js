@@ -42,6 +42,7 @@ client.on('messageCreate', async message => {
     for (const channel of message.guild.channels.cache.values()) {
       if (!channel.isTextBased()) continue;
       msg = await channel.messages.fetch(args[0]).catch(_ => _);
+      console.log(msg);
       if (msg) break;
     }
     if (!msg) return message.reply('Message not found');
