@@ -173,7 +173,7 @@ client.on('messageCreate', async message => {
   if (lower.includes('ben')) message.reply('10'); // TEMP
 
 
-  if (message.channel.isThread()) {
+  if (!message.author.bot && message.channel.isThread()) {
     const issueNumber = await issueNumberForThread(message.channel.id);
     if (!issueNumber) return;
 
