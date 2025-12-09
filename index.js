@@ -4,13 +4,25 @@ const token = fs.readFileSync('token.txt', 'utf8').replace(/ /g, '').replace(/\n
 const {Client, GatewayIntentBits, Partials} = require("discord.js");
 const express = require('express');
 
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildPresences,
+  ],
+  partials: [Partials.Message, Partials.Reaction, Partials.Channel]
+});
+
 const app = express();
 app.use(express.json());
 
 const e = _ => _;
 
 const forumChannel = '1407752313522880512';
-const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
+const ensureThreadForIssue = async(repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
   if (Data.Issues[issueNumber]) {
     try {
       const storedChannel = await client.channels.fetch(Data.Issues[issueNumber].channel).catch(e);
@@ -21,7 +33,7 @@ const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issue
     } catch (e) {}
   }
   const channel = await client.channels.fetch(forumChannel).catch(e);
-  //if (!channel || !channel.isTextBased()) return;
+  if (!channel) return;
 
   const messageContent = `**Issue #${issueNumber}: ${issueTitle}**\n${issueUrl}\n\n${issueBody || '(no description)'}`;
   const threadName = `Issue #${issueNumber}: ${issueTitle}`.slice(0, 100); // keep it reasonable
@@ -90,18 +102,6 @@ app.post('/webhook', async(req, res) => {
   }
 });
 
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildPresences,
-  ],
-  partials: [Partials.Message, Partials.Reaction, Partials.Channel]
-});
-
 const Data = {};
 const Load = _ => {
   console.log('Loading Bot Data...');
@@ -161,6 +161,33 @@ const LoafReminder = _ => {
   }, 1000*60*60*24*Math.random());
 }
 setInterval(LoafReminder, 1000*60*60*24);
+
+let lastOnline = 0;
+const getOnline = async _ => {
+  const guild = await client.guilds.fetch(GUILD_ID);
+  await guild.members.fetch();
+  const online = guild.members.cache.filter(m => {
+    const hasRole = m.roles.cache.has(1448089464818765846);
+    const presence = m.presence;
+    const isOnline = presence && presence.status && presence.status !== 'offline';
+    return hasRole && isOnline;
+  });
+  return online;
+}
+const checkAndNotify = async _ => {
+  try {
+    const online = await getOnline(), channel = await client.channels.fetch(1448088599458484357);
+    const text = `🟢 **Beta Testers online now:** ${online.length}`+online.reduce((a, c) => a+c+' ', '');
+    const msg = await channel.messages.fetch(1448088622787203143);
+    await msg.edit(text);
+    if (online.length != lastOnline) client.users.fetch(783362675761348629).then(user => user.send(text)).catch(console.error);
+    lastOnline = online.length;
+  } catch (err) {
+    console.error('checkAndNotify error:', err);
+  }
+}
+await checkAndNotify();
+setInterval(checkAndNotify, 1000*60*5);
 
 const setRole = async(user, reaction, rid, add) => {
   rid = rid.replaceAll('<', '').replaceAll('>', '').replaceAll('@', '').replaceAll('&', '');
