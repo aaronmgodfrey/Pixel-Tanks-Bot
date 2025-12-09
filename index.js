@@ -10,7 +10,7 @@ app.use(express.json());
 const e = _ => _;
 
 const forumChannel = '1407752313522880512';
-const ensureThreadForIssue = (repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
+const ensureThreadForIssue = async (repoFullName, issueNumber, issueTitle, issueUrl, issueBody) => {
   if (Data.Issues[issueNumber]) {
     try {
       const storedChannel = await client.channels.fetch(Data.Issues[issueNumber].channel).catch(e);
