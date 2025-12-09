@@ -124,7 +124,7 @@ const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'fdba24e2d6e5ffcfc9b0d8ed5ca99ebb834c0498',
+        'Authorization': 'token fdba24e2d6e5ffcfc9b0d8ed5ca99ebb834c0498',
       },
       body: JSON.stringify({body: bodyMarkdown}),
     });
