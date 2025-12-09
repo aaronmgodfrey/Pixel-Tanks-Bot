@@ -178,7 +178,7 @@ const checkAndNotify = async _ => {
   try {
     const online = await getOnline(), channel = await client.channels.fetch('1448088599458484357');
     const text = `🟢 **Beta Testers online now:** ${online.size} `+[...online].reduce((a, c) => a+c[1].user.username+' ', '');
-    const msg = await channel.messages.fetch('1448094250586869941');
+    const msg = await channel.messages.fetch('1448088622787203143');
     await msg.edit(text);
     if (online.size != lastOnline) client.users.fetch('783362675761348629').then(user => user.send(text)).catch(console.error);
     lastOnline = online.size;
