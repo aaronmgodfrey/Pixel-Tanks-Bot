@@ -160,6 +160,7 @@ const LoafReminder = _ => {
     web.send('<@1180677005407166546> '+reminders[Math.floor(reminders.length*Math.random())]);
   }, 1000*60*60*24*Math.random());
 }
+LoafReminder();
 setInterval(LoafReminder, 1000*60*60*24);
 
 let lastOnline = 0;
