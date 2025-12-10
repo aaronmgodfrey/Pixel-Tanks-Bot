@@ -199,15 +199,18 @@ const setRole = async(user, reaction, rid, add) => {
 const commandPrefix = '!g ';
 const greetings = ['Hi', 'Hello', 'Hey', 'Hey there', 'Hi', 'Heya', 'Sup', 'Hoi', 'Hia'], emoticons = ['^V^', ':)', ':]', ':D', '=)', '=]', '=D'];
 client.on('messageCreate', async message => {
-  let lower = message.content.toLowerCase();
-  if (lower.includes('] ben')) lower = lower.replace('] be', 'ezlb');
+  let lower = message.content.toLowerCase(), isBen = false;
+  if (lower.includes('] ben')) {
+    isBen = true;
+    lower = lower.replace('] be', 'ezlb');
+  }
   if (lower.includes('greg') || message.content.includes('<@1447959380787200021>')) {
     if (lower.includes('[owner] r3gress1on')) lower = lower.replace('] r3', 'ezlb');
     if (greetings.some(g => lower.includes(g.toLowerCase()))) message.reply(greetings[Math.floor(Math.random()*greetings.length)]+' '+emoticons[Math.floor(Math.random()*emoticons.length)]);
     if (lower.includes('r3')) message.reply('<@783362675761348629>');
   }
   if (lower.includes('oops')) message.reply('hotdog'); // TEMP
-  if (lower.includes('ben')) message.reply('10'); // TEMP
+  if (lower.includes('ben') && isBen) message.reply('10'); // TEMP
 
 
   if (!message.author.bot && message.channel.isThread()) {
