@@ -156,8 +156,7 @@ const postCommentToCodeberg = async(issueNumber, bodyMarkdown) => {
 const reminders = [`Shouldn't you be making menus right now?`, `A menu a day keeps the set loss away`, `Where's my menus?`, `Aren't you going to make menus?`, `Menus????`, `Hello? Menus?`, ` should be making menus right now...`];
 const LoafReminder = _ => {
   setTimeout(() => {
-    const web = client.channels.cache.get('1442234725996695632');
-    web.send('<@1180677005407166546> '+reminders[Math.floor(reminders.length*Math.random())]);
+    client.users.fetch('1180677005407166546').then(user => user.send('<@1180677005407166546> '+reminders[Math.floor(reminders.length*Math.random())])).catch(console.error);
   }, 1000*60*60*24*Math.random());
 }
 LoafReminder();
